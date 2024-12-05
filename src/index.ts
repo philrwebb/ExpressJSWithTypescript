@@ -1,9 +1,12 @@
-import createApp from './createApp';
+import express from 'express';
 
-const app = createApp();
+import { setupRoutes } from './routes/setuproutes';
 
-const PORT = 3000;
+const app = express();
+app.use(express.json());
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+setupRoutes(app);
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
 });
