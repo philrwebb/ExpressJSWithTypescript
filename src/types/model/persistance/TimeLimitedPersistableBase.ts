@@ -1,4 +1,4 @@
-import { PersistableBase } from './PersistableBase';
+import { PersistableBase } from '../persistance/PersistableBase';
 
 export interface TimeLimitedPersistableBase extends PersistableBase {
   effFrom: Date;

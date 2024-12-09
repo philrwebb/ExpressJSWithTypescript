@@ -1,4 +1,4 @@
-import { PersistableBase } from '../persistence/PersistableBase';
+import { PersistableBase } from '../persistance/PersistableBase';
 
 export interface Person extends PersistableBase {
   givenNames: string;

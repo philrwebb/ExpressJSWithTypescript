@@ -1,6 +1,6 @@
 import express from 'express';
 // import { Request, Response } from 'express-serve-static-core';
-import { PersistableBase } from '../types/model/persistence/PersistableBase';
+import { PersistableBase } from '../types/model/persistance/PersistableBase';
 import { Repository } from '../repositories/Repository';
 import { InMemoryRepository } from '../repositories/InMemoryRepository';
 import { zodValidationMiddleware } from '../middleware/zodValidationMiddleware';

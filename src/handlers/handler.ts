@@ -1,5 +1,5 @@
 import { Request, Response } from 'express-serve-static-core';
-import { PersistableBase } from '../types/model/persistence/PersistableBase';
+import { PersistableBase } from '../types/model/persistance/PersistableBase';
 import { Repository } from '../repositories/Repository';
 
 export class GenericHandler<T extends PersistableBase> {
