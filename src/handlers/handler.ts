@@ -3,14 +3,15 @@ import { PersistableBase } from '../types/model/persistance/PersistableBase';
 import { Repository } from '../repositories/Repository';
 
 export class GenericHandler<T extends PersistableBase> {
-  constructor(private repository: Repository<T>) {}
+  constructor(private repository: Repository<T>) {
+    // console.log('GenericHandler constructor');
+  }
 
   getAll = async (req: Request, res: Response) => {
     try {
       const items = await this.repository.getAll();
       res.send(items);
     } catch (error) {
-      console.error(error);
       res.status(500).send({ message: 'Internal Server Error' });
     }
   };
@@ -28,7 +29,6 @@ export class GenericHandler<T extends PersistableBase> {
         res.status(404).send({ message: 'Item not found' });
       }
     } catch (error) {
-      console.error(error);
       res.status(500).send({ message: 'Internal Server Error' });
     }
   };
@@ -41,7 +41,6 @@ export class GenericHandler<T extends PersistableBase> {
       const newItem = await this.repository.create(req.body);
       res.status(201).send(newItem);
     } catch (error) {
-      console.error(error);
       res.status(500).send({ message: 'Internal Server Error' });
     }
   };
@@ -59,7 +58,6 @@ export class GenericHandler<T extends PersistableBase> {
         res.status(404).send({ message: 'Item not found' });
       }
     } catch (error) {
-      console.error(error);
       res.status(500).send({ message: 'Internal Server Error' });
     }
   };
@@ -77,28 +75,7 @@ export class GenericHandler<T extends PersistableBase> {
         res.status(404).send({ message: 'Item not found' });
       }
     } catch (error) {
-      console.error(error);
       res.status(500).send({ message: 'Internal Server Error' });
     }
   };
 }
-
-// export const createRoutesForType = <T extends PersistableBase>(
-//   app: express.Application,
-//   type: string,
-//   schema: ZodSchema<any>,
-// ) => {
-//   const repo: Repository<T> = new FileRepository<T>(`./data/${type}.json`);
-//   const handler = new GenericHandler<T>(repo);
-//   var router = express.Router();
-//   router.use((req, res, next) => {
-//     console.log(`Request URL: ${req.originalUrl} for ${type} at ${Date.now()}`);
-//     next();
-//   });
-//   router.get(`/`, handler.getAll);
-//   router.get(`/:id`, handler.getById);
-//   router.post(`/`, zodValidationMiddleware(schema), handler.create);
-//   router.put(`/:id`, zodValidationMiddleware(schema), handler.update);
-//   router.delete(`:id`, handler.delete);
-//   app.use(`/${type}`, router);
-// };

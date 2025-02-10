@@ -5,6 +5,7 @@ import { ZodSchema } from 'zod';
 export const zodValidationMiddleware =
   <T extends ZodSchema<any>>(schema: T) =>
   (req: Request, res: Response, next: NextFunction) => {
+    console.log('Validating request data');
     try {
       // Parse and validate
       req.body = schema.parse(req.body);

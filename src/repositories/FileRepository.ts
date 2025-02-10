@@ -7,7 +7,9 @@ type Schema<T> = {
   items: T[];
 };
 
-export class FileRepository<T extends { id: number }> implements Repository<T> {
+export class FileRepository<T extends { id: number; active: boolean }>
+  implements Repository<T>
+{
   private db: lowdb.LowdbSync<Schema<T>>;
   private currentId: number;
 
@@ -16,6 +18,12 @@ export class FileRepository<T extends { id: number }> implements Repository<T> {
     this.db = lowdb(adapter);
     this.db.defaults({ items: [] }).write();
     this.currentId = this.db.get('items').value().length + 1;
+  }
+  private calculateNextId(): number {
+    const items = this.db.get('items').value();
+    const maxId =
+      items.length > 0 ? Math.max(...items.map((item) => item.id)) : 0;
+    return maxId + 1;
   }
 
   async getAll(): Promise<T[]> {
@@ -32,7 +40,7 @@ export class FileRepository<T extends { id: number }> implements Repository<T> {
   }
 
   async create(item: Omit<T, 'id'>): Promise<T> {
-    const newItem = { ...item, id: this.currentId++ } as T;
+    const newItem = { ...item, id: this.calculateNextId() } as T;
     this.db.get('items').push(newItem).write();
     return newItem;
   }
@@ -54,10 +62,12 @@ export class FileRepository<T extends { id: number }> implements Repository<T> {
   }
 
   async delete(id: number): Promise<boolean> {
-    const removed = this.db
+    console.log(id);
+    const item = this.db
       .get('items')
-      .remove((item: T) => item.id === id)
+      .find((item: T) => item.id === id)
+      .assign({ active: false })
       .write();
-    return removed.length > 0;
+    return true;
   }
 }
