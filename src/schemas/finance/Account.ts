@@ -16,7 +16,7 @@ export const CreateAccountSchema = z.object({
    }
    return undefined;
 }, z.date({ required_error: "" })),
-  Personid: z.number(),
+  Personid: z.number().int().positive(),
 });
 
 export type CreateAccountDto = z.infer<typeof CreateAccountSchema>;

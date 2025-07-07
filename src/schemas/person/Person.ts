@@ -11,7 +11,7 @@ export const CreatePersonSchema = z.object({
    }
    return undefined;
 }, z.date({ required_error: "" })),
-  GenderTypeid: z.number(),
+  GenderTypeid: z.number().int().positive(),
 });
 
 export type CreatePersonDto = z.infer<typeof CreatePersonSchema>;

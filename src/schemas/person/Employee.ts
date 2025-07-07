@@ -11,8 +11,8 @@ export const CreateEmployeeSchema = z.object({
    }
    return undefined;
 }, z.date({ required_error: "" })),
-  GenderTypeid: z.number(),
-  Departmentid: z.number(),
+  GenderTypeid: z.number().int().positive(),
+  Departmentid: z.number().int().positive(),
 });
 
 export type CreateEmployeeDto = z.infer<typeof CreateEmployeeSchema>;

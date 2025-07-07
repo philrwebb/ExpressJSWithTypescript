@@ -8,8 +8,8 @@ export const CreateAddressSchema = z.object({
   suburb:  z.string(),
   postcode:  z.string(),
   state:  z.string(),
-  AddressTypeid: z.number(),
-  Personid: z.number(),
+  AddressTypeid: z.number().int().positive(),
+  Personid: z.number().int().positive().optional(),
 });
 
 export type CreateAddressDto = z.infer<typeof CreateAddressSchema>;
